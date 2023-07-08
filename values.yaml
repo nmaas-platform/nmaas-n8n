@@ -295,3 +295,16 @@ redis:
       enabled: true
       existingClaim: ""
       size: 2Gi  
+
+postgresql:
+  enabled: false
+  primary:
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 5Gi
+  auth:
+    postgresPassword: admin_secret
+    username: n8n
+    password: n8n_secret
+    database: n8n
