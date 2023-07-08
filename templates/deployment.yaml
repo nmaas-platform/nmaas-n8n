@@ -36,6 +36,29 @@ spec:
       serviceAccountName: {{ include "n8n.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.extensions.d2 }}
+      initContainers:
+        - command:
+          - /bin/sh
+          - -c
+          - |
+            if [ ! -f /opt/software/d2 ]; then
+              echo "Installing d2..."
+              wget -O /tmp/d2.tar.gz https://github.com/terrastruct/d2/releases/download/v0.5.1/d2-v0.5.1-linux-amd64.tar.gz
+              tar -xvzf /tmp/d2.tar.gz -C /tmp
+              mv /tmp/d2-*/bin/d2 /opt/software/d2
+              chmod +x /opt/software/d2
+            else
+              echo "d2 already installed..."
+            fi
+          image: alpine:3.18.2
+          imagePullPolicy: IfNotPresent
+          name: init-install-d2
+          volumeMounts:
+          - mountPath: /opt/software
+            name: data
+            subPath: software
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.command }}
@@ -71,6 +94,11 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /root/.n8n
+            {{- if or .Values.extensions.d2 }}
+            - name: data
+              mountPath: /opt/software
+              subPath: software
+            {{- end }}
             {{- if .Values.config }}
             - name: config-volume
               mountPath: /n8n-config

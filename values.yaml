@@ -158,7 +158,7 @@ image:
   repository: n8nio/n8n
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "0.236.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -308,3 +308,6 @@ postgresql:
     username: n8n
     password: n8n_secret
     database: n8n
+
+extensions:
+  d2: true
