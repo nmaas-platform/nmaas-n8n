@@ -47,6 +47,10 @@ spec:
           args: ["webhook"]
           env:
             {{- include "n8n.deploymentPodEnvironments" . | nindent 12 }}
+            {{- if .Values.ingress.enabled }}
+            - name: WEBHOOK_TUNNEL_URL
+              value: {{ printf "https://%s/" (index .Values "ingress" "hosts" | first).host  | quote }}
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ get .Values.config "port" | default 5678 }}

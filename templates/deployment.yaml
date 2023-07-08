@@ -48,6 +48,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- include "n8n.deploymentPodEnvironments" . | nindent 12 }}
+            {{- if .Values.ingress.enabled }}
+            - name: WEBHOOK_TUNNEL_URL
+              value: {{ printf "https://%s/" (index .Values "ingress" "hosts" | first).host  | quote }}
+            {{- end }}
           lifecycle:
             {{- toYaml .Values.lifecycle | nindent 12 }}
           ports:
