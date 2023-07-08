@@ -36,8 +36,9 @@ spec:
       serviceAccountName: {{ include "n8n.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if .Values.extensions.d2 }}
+      {{- if or .Values.extensions.d2 .Values.extensions.nrx }}
       initContainers:
+        {{- if .Values.extensions.d2 }}
         - command:
           - /bin/sh
           - -c
@@ -58,6 +59,31 @@ spec:
           - mountPath: /opt/software
             name: data
             subPath: software
+        {{- end }}
+        {{- if .Values.extensions.nrx }}
+        - command:
+          - /bin/sh
+          - -c
+          - |
+            if [ ! -d /opt/software/nrx ]; then
+              echo "Installing nrx..."
+              apk add --no-cache py3-pip py3-virtualenv git
+              git clone https://github.com/frederic-loui/nrx.git /opt/software/nrx
+              cd /opt/software/nrx
+              git checkout d2-export
+              virtualenv -p python3 venv
+              /opt/software/nrx/venv/bin/pip3 install -r /opt/software/nrx/requirements.txt
+            else
+              echo "nrx already installed..."
+            fi
+          image: alpine:3.18.2
+          imagePullPolicy: IfNotPresent
+          name: init-install-nrx
+          volumeMounts:
+          - mountPath: /opt/software
+            name: data
+            subPath: software
+        {{- end }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -94,7 +120,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /root/.n8n
-            {{- if or .Values.extensions.d2 }}
+            {{- if or .Values.extensions.d2 .Values.extensions.nrx }}
             - name: data
               mountPath: /opt/software
               subPath: software

@@ -312,3 +312,4 @@ postgresql:
 
 extensions:
   d2: true
+  nrx: true
