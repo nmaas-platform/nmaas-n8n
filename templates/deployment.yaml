@@ -52,7 +52,7 @@ spec:
             else
               echo "d2 already installed..."
             fi
-          image: alpine:3.18.2
+          image: alpine:3.17.4
           imagePullPolicy: IfNotPresent
           name: init-install-d2
           volumeMounts:
@@ -68,15 +68,15 @@ spec:
             if [ ! -d /opt/software/nrx ]; then
               echo "Installing nrx..."
               apk add --no-cache py3-pip py3-virtualenv git
-              git clone https://github.com/frederic-loui/nrx.git /opt/software/nrx
+              git clone https://github.com/korvoj/nrx /opt/software/nrx
               cd /opt/software/nrx
-              git checkout d2-export
+              git pull && git submodule init && git submodule update && git submodule status
               virtualenv -p python3 venv
               /opt/software/nrx/venv/bin/pip3 install -r /opt/software/nrx/requirements.txt
             else
               echo "nrx already installed..."
             fi
-          image: alpine:3.18.2
+          image: alpine:3.17.4
           imagePullPolicy: IfNotPresent
           name: init-install-nrx
           volumeMounts:
