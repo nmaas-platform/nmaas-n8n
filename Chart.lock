@@ -2,5 +2,11 @@ dependencies:
 - name: redis
   repository: https://charts.bitnami.com/bitnami
   version: 17.2.0
-digest: sha256:989a8e3f05d54b04db15e782bd24ca5a5872a36f5dc02b7882b25491a5a5ddde
-generated: "2022-09-30T08:49:11.0457529+02:00"
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.9.13
+- name: nmaas-bastion-ng
+  repository: https://artifactory.software.geant.org/artifactory/nmaas-helm-stable-local
+  version: 3.0.0
+digest: sha256:1af865c2cfd71e313cb7fe44475a1d94e20b59d90745c79ec4b3db780c6d8bb0
+generated: "2023-07-26T17:14:56.18497624+02:00"
