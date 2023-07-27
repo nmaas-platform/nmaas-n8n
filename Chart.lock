@@ -8,5 +8,5 @@ dependencies:
 - name: nmaas-bastion-ng
   repository: https://artifactory.software.geant.org/artifactory/nmaas-helm-stable-local
   version: 3.0.0
-digest: sha256:1af865c2cfd71e313cb7fe44475a1d94e20b59d90745c79ec4b3db780c6d8bb0
-generated: "2023-07-26T17:14:56.18497624+02:00"
+digest: sha256:0d3b2f136a65f63bd0dd032e71b797428090fdeaa91e11d062698da73fe960f6
+generated: "2023-07-27T13:56:52.734304465+02:00"

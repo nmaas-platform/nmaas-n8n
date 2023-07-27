@@ -316,3 +316,7 @@ extensions:
 
 bastion:
   enabled: false
+  properties:
+    uid: 1000
+    gid: 1000
+    username: bastion
