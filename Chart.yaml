@@ -1,7 +1,7 @@
 apiVersion: v2
 name: n8n
-version: 0.11.0
-appVersion: 0.236.0
+version: 0.11.2
+appVersion: 0.237.0
 type: application
 
 description: "A Kubernetes Helm chart for n8n a free and open fair-code licensed node based Workflow Automation Tool. Easily automate tasks across different services."
@@ -33,6 +33,6 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
   - name: nmaas-bastion-ng
-    version: 3.0.0
+    version: 3.0.1
     repository: https://artifactory.software.geant.org/artifactory/nmaas-helm-stable-local
     condition: nmaas-bastion-ng.enabled
